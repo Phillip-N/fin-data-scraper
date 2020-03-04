@@ -5,6 +5,7 @@ import requests, bs4, sys
 import json
 
 from tickSearch import tickSearch
+from getChart import getChart
 
 #TODO Create comments detailing possible sys commands
 #TODO Download webpage containing financial data with requests
@@ -44,16 +45,13 @@ def getQuote(ticker):
 def getSummary(ticker):
     pass
 
-def getChart(ticker):
-    pass
-
 if len(sys.argv) <= 3:
     if sys.argv[1] == 'q':
         getQuote(sys.argv[2])
     elif sys.argv[1] == 'summary':
         pass
     elif sys.argv[1] == 'chart':
-        pass
+        getChart(sys.argv[2])
     elif sys.argv[1] == 'search':
         tickSearch(sys.argv[2])
 
