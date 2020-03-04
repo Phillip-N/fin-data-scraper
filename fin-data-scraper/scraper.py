@@ -30,7 +30,41 @@ def getQuote(ticker):
     print(f'Change: {quote[1].getText()}')
 
 
-def getSummary(ticket):
+def getSummary(ticker):
+    pass
+
+def tickSearch(companyname):
+    req = requests.get('https://stocks.tradingcharts.com/stocks/symbols/s/all/%s' %companyname)
+    req.raise_for_status
+    searchsoup = bs4.BeautifulSoup(req.text, features='html.parser')
+    table = searchsoup.find('table', {'class':'stocks_symbols_results_table'})
+
+    searchresults = []
+    for td in table.find_all('td'):
+        if td.find(class_='stocks_symbols_results_table_link') or td.find('a'):
+            continue
+        else:
+            searchresults.append(td.text)
+    
+    # Format Results
+    colCn = searchresults[0:len(searchresults):3]
+    colSym = searchresults[1:len(searchresults):3]
+    colExc = searchresults[2:len(searchresults):3]
+
+    # Adding Headers
+    colCn.insert(0, 'Company Name')
+    colSym.insert(0, 'Symbol')
+    colExc.insert(0, 'Exchange')
+
+    colWidth = [max(colCn), max(colSym), max(colExc)]
+
+    # Creating Table
+    table = [colCn, colSym, colExc]
+
+    # Printing Results
+
+
+
 
 
 if len(sys.argv) <= 3:
@@ -41,7 +75,7 @@ if len(sys.argv) <= 3:
     elif sys.argv[1] == 'chart':
         pass
     elif sys.argv[1] == 'search':
-        pass
+        tickSearch(sys.argv[2])
 
 if len(sys.argv) > 3:
     pass
