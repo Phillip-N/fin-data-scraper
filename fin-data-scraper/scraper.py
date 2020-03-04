@@ -24,18 +24,28 @@ from tickSearch import tickSearch
 # fds search companyname
 
 def getQuote(ticker):
-    req = requests.get('https://ca.finance.yahoo.com/quote/%s' % ticker)
+    url = 'https://ca.finance.yahoo.com/quote/%s' % ticker
+    req = requests.get(url)
     req.raise_for_status()
     quotesoup = bs4.BeautifulSoup(req.text, features='html.parser')
     quote = quotesoup.select('.Trsdu\(0\.3s\)')
-    print(f'Price: {quote[0].getText()}')
-    print(f'Change: {quote[1].getText()}')
+    if req.history:
+        print('''
+        Sorry, we could not find that a quote for that ticker,
+        please try to search for your company using the search
+        command scraper.py search 'companyname' to search for
+        the correct ticker symbol
+        ''')
+    else:
+        print(f'Price: {quote[0].getText()}')
+        print(f'Change: {quote[1].getText()}')
 
 
 def getSummary(ticker):
     pass
 
 def getChart(ticker):
+    pass
 
 if len(sys.argv) <= 3:
     if sys.argv[1] == 'q':
