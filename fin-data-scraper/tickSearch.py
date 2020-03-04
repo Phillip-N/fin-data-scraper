@@ -43,10 +43,12 @@ def tickSearch(companyname):
         # Creating Table
         table = [colCn, colSym, colExc]
 
-        # Printing Results
+        # Printing Results and formatting table
         for i in range(len(table[0])): 
+            if i == 1:
+                print('-'*(sum(colWidth)))
             for y in range(3):
                 if (y != 0) and ((y % 2) == 0):
                     print(table[y][i].ljust(colWidth[y]))
                 else:
-                    print(table[y][i].ljust(colWidth[y]), end=' ')
+                    print(table[y][i].ljust(colWidth[y]), end=' | ')

@@ -2,6 +2,7 @@ import requests, bs4, os
 from PIL import Image
 
 def getChart(ticker):
+    # The site stock charts needs a User-agent header in order to allow get requests
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36'}
     os.makedirs('charts', exist_ok=True)
     req = requests.get('https://stockcharts.com/h-sc/ui?s=%s' %ticker, headers=headers)
@@ -15,11 +16,13 @@ def getChart(ticker):
     else:
         chartUrl = 'https:' + chartElem[0].get('src')
         res = requests.get(chartUrl, headers=headers)
-    
+
+        # Saving the file to the charts folder
         image = open(os.path.join('charts', 'sc.png'), 'wb')
         for chunk in res.iter_content(100000):
             image.write(chunk)
         image.close
 
+        # Using Pillow to open image
         img = Image.open(r'.\charts\sc.png')
         img.show()
