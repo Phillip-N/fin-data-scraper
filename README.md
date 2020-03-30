@@ -34,4 +34,10 @@ Financial Data Web Scraper
     <td>fds mq {ticker(s)}</td>
     <td>Returns a list of multiple quotes based on the ticker query</td>
   </tr>
-    
+</table>
+
+
+<h3>See Demo Below:</h3>
+
+![](sample.gif)
+
